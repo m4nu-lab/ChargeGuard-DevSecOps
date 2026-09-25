@@ -1,8 +1,6 @@
-PIPELINE
-
-
 pipeline {
     agent any
+
     environment {
         PATH = "/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin"
         IMAGE_NAME = "chargeguard:latest"
@@ -39,10 +37,7 @@ pipeline {
             steps {
                 sh '''
                     docker rm -f chargeguard-staging 2>/dev/null || true
-                    docker run -d \
-                    --name chargeguard-staging \
-                    -p 3002:3000 \
-                    $IMAGE_NAME
+                    docker run -d --name chargeguard-staging -p 3002:3000 $IMAGE_NAME
 
                     sleep 3
                     curl -f http://localhost:3002
@@ -54,10 +49,7 @@ pipeline {
             steps {
                 sh '''
                     docker rm -f chargeguard-production 2>/dev/null || true
-                    docker run -d \
-                    --name chargeguard-production \
-                    -p 3003:3000 \
-                    $IMAGE_NAME
+                    docker run -d --name chargeguard-production -p 3003:3000 $IMAGE_NAME
 
                     sleep 3
                     curl -f http://localhost:3003
