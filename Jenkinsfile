@@ -30,5 +30,10 @@ pipeline {
                 sh 'npm audit --audit-level=high'
             }
         }
+       stage('Docker Build') {
+            steps {
+                sh 'docker build -t chargeguard:latest .'
+            }
+        }
     }
 }
