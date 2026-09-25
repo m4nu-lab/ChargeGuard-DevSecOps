@@ -2,10 +2,11 @@ pipeline {
     agent any
 
     environment {
-        PATH = "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+        PATH = "/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin"
     }
 
     stages {
+
         stage('Install Dependencies') {
             steps {
                 sh 'npm ci'
@@ -15,6 +16,12 @@ pipeline {
         stage('Run Tests') {
             steps {
                 sh 'npm test'
+            }
+        }
+
+        stage('Code Quality') {
+            steps {
+                sh 'npm run lint'
             }
         }
 
